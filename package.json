@@ -1,0 +1,11 @@
+{
+  "name": "sin-validator",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ts-node sinValidator.ts"
+  },
+  "dependencies": {
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
+  }
+}
