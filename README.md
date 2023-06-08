@@ -39,7 +39,9 @@ To run the project and validate a SIN, follow these steps:
 
 `ts-node main.ts <SIN>`
 
-Replace `<SIN>` with the SIN number you want to validate. For example: 046454286
+Replace `<SIN>` with the SIN number you want to validate. For example: 046454286 is a valid sin.
+
+If you want to test with an invalid sin, you can use this one: 046454296
 
 This command will validate the SIN and print the validation result on screen for you.
 
