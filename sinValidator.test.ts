@@ -1,52 +1,85 @@
-import { describe, test } from 'jest';
+import {
+  calculateSum,
+  getSplitDigits,
+  isEvenIndex,
+  isSecondDigitSumDivisibleBy10,
+  splitAndAddDigits,
+  validateExactSinLength,
+  validateSin
+} from "./helpers/sinValidator";
 
-describe("SIN Validation", () => {
-  // validate that a SIN will be exactly 9 digits long.
-  describe("validateExactSinLength", () => {
-    test("should return true for SIN with exact 9 digits", () => {
-      expect(validateExactSinLength("046454296")).toBe(true);
-    });
-
-    test("should return false for SIN with less than 9 digits", () => {
-      expect(validateExactSinLength("12345678")).toBe(false);
-    });
-
-    test("should return false for SIN with more than 9 digits", () => {
-      expect(validateExactSinLength("1234567890")).toBe(false);
-    });
+describe('validateExactSinLength', () => {
+  test('returns true when the SIN length is exactly 9 digits: 046454286', () => {
+    const result = validateExactSinLength('046454286');
+    expect(result).toBe(true);
   });
 
-  // When every 2nd digit in the SIN multiplied by 2, and then added together, the sum should be divisible by 10.
-  // Note any digit over 9 will be separated into its individual values when added up. 16 = 1 + 6, 13 = 1 + 3 , etc.
-  describe("validateSumOfSecondDigitsDivisibleBy10", () => {
-    test("should return true for valid SIN with sum of second digits divisible by 10", () => {
-      expect(validateSumOfSecondDigitsDivisibleBy10("046454296")).toBe(true);
-    });
+  test('returns false when the SIN length is not 9 digits: 0464543', () => {
+    const result = validateExactSinLength('0464543');
+    expect(result).toBe(false);
+  });
+});
 
-    test("should return false for SIN with sum of second digits not divisible by 10", () => {
-      expect(validateSumOfSecondDigitsDivisibleBy10("123456789")).toBe(false);
-    });
+describe('isSecondDigitSumDivisibleBy10', () => {
+  test('returns true when the sum of every 2nd digit in the SIN is divisible by 10', () => {
+    const result = isSecondDigitSumDivisibleBy10('046454286');
+    expect(result).toBe(true);
   });
 
-  // validate if all the SIN digits after being added up can be divided by 10 evenly
-  describe("validateSumOfDigitsDivisibleBy10", () => {
-    test("should return true for valid SIN with sum of digits divisible by 10", () => {
-      expect(validateSumOfDigitsDivisibleBy10("046454296")).toBe(true);
-    });
+  test('returns false when the sum of every 2nd digit in the SIN is not divisible by 10', () => {
+    const result = isSecondDigitSumDivisibleBy10('046454296');
+    expect(result).toBe(false);
+  });
+});
 
-    test("should return false for SIN with sum of digits not divisible by 10", () => {
-      expect(validateSumOfDigitsDivisibleBy10("123456788")).toBe(false);
-    });
+describe('splitAndAddDigits', () => {
+  test('correctly splits and pushes the digits', () => {
+    let newSin = [];
+    splitAndAddDigits(16, newSin);
+    expect(newSin).toEqual([1, 6]);
+  });
+});
+
+describe('isEvenIndex', () => {
+  test('returns true if the current index of a SIN digit is the second digit', () => {
+    const result = isEvenIndex(2);
+    expect(result).toBe(false);
   });
 
-  // validate if a SIN is valid or not
-  describe("validateSin", () => {
-    test("should return 'Valid SIN' for a valid SIN", () => {
-      expect(validateSin("046454296")).toBe("Valid SIN ✅");
-    });
+  test('returns false if the current index of a SIN digit is not the second digit', () => {
+    const result = isEvenIndex(3);
+    expect(result).toBe(true);
+  });
+});
 
-    test("should return 'Not a valid SIN' for an invalid SIN", () => {
-      expect(validateSin("123456788")).toBe("Not a valid SIN ❌");
-    });
+describe('getSplitDigits', () => {
+  test('returns an array of split digits from a SIN', () => {
+    const result = getSplitDigits('046454286');
+    expect(result).toMatchObject([0, 8, 6, 8, 5, 8, 2, 1, 6, 6]);
+  });
+});
+
+describe('calculateSum', () => {
+  test('calculates the sum of digits correctly', () => {
+    const digits = [1, 2, 3, 4];
+    const result = calculateSum(digits);
+    expect(result).toBe(10);
+  });
+});
+
+describe('validateSin', () => {
+  test('returns "Valid SIN ✅" when the SIN is valid (046454286)', () => {
+    const result = validateSin('046454286');
+    expect(result).toBe('Valid SIN ✅');
+  });
+
+  test('returns "Not a valid SIN ❌" when the SIN is not 9 digits long (0464543)', () => {
+    const result = validateSin('0464543');
+    expect(result).toBe('Not a valid SIN ❌');
+  });
+
+  test('returns "Not a valid SIN ❌" when the SIN is the correct length but not valid (046454296)', () => {
+    const result = validateSin('046454296');
+    expect(result).toBe('Not a valid SIN ❌');
   });
 });

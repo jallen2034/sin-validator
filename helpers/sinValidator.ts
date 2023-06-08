@@ -1,10 +1,13 @@
 // validate that a A SIN will be exactly 9 digits long.
-import {DIVISIBILITY_CHECK, SIN_LENGTH} from "./constants";
+import {DIVISIBILITY_CHECK, SIN_LENGTH} from "../constants";
 
 export const validateExactSinLength = (sin: string): boolean => {
   return sin.length === SIN_LENGTH;
 }
 
+/* Split any number greater than 10 into separate digits, then add them together
+ * For instance, take "12", split it into 1 and 2, then add 1 + 2 to obtain 3
+ * and push that added value into the newSin array */
 export const splitAndAddDigits = (num: number, newSin: number[]): void => {
   const separatedDigits: number[] = String(num).split("").map(Number);
   for (let separatedDigit of separatedDigits) {
@@ -16,6 +19,8 @@ export const isEvenIndex = (i: number) => {
   return i % 2 === 1;
 }
 
+/* Multiply every second digit by 2 and split digits over 9 into individual values
+ * For example: 0 4 6 4 5 4 2 8 6 -> 0 4 6 4 5 4 2 8 6 -> 0 + 8 + 6 + 8 + 5 + 8 + 2 + 1 + 6 + 6 */
 export const getSplitDigits = (sin: string): number[] => {
   const splitDigits: number[] = [];
   for (let i = 0; i < sin.length; i++) {
@@ -32,6 +37,7 @@ export const getSplitDigits = (sin: string): number[] => {
   return splitDigits;
 };
 
+// Calculate the sum of all digits in the 'digits' array using a reducer function
 export const calculateSum = (digits: number[]): number => {
   return digits.reduce((sum, digit) => sum + digit, 0);
 };
@@ -44,6 +50,7 @@ export const isSecondDigitSumDivisibleBy10 = (sin: string): boolean => {
   return sumOfSplitDigits % 10 === 0; // Check if the sum is divisible by 10
 };
 
+// Main function to validate if a sin is valid or not
 export const validateSin = (sin: string): string => {
   let isValidSin: boolean;
   const errorMessage: string = 'Not a valid SIN ❌';
@@ -56,14 +63,4 @@ export const validateSin = (sin: string): string => {
     return errorMessage;
   }
   return 'Valid SIN ✅';
-}
-
-// Retrieve the SIN from the command line arguments
-const sin: string = process.argv[2];
-
-if (!sin) {
-  console.log("You need to input a valid sin number!")
-} else {
-  const validationMessage: string = validateSin(sin); // Validate the SIN
-  console.log(validationMessage);  // Print the validation result
 }
