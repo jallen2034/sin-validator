@@ -6,8 +6,8 @@ This project provides a SIN (Social Insurance Number) validation utility. It all
 
 Before running the project, make sure you have the following prerequisites installed:
 
-- Node.js
-- npm (Node Package Manager)
+- Node.js (v16.14.0)
+- npm (Node Package Manager) (8.3.1)
 
 ## Installation
 
