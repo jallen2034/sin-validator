@@ -1,8 +1,6 @@
 "use strict";
 exports.__esModule = true;
-// Import the necessary dependencies and functions for testing
 var sinValidator_1 = require("./helpers/sinValidator");
-// Unit tests for the validation methods
 describe('validateExactSinLength', function () {
     test('returns true when the SIN length is exactly 9 digits: 046454286', function () {
         var result = (0, sinValidator_1.validateExactSinLength)('046454286');
